@@ -31,9 +31,14 @@ class SolarSystem
 		addPlanetoid(sun);
 
 		// orbits = new Array<Orbit>();
-		for (i in 0...p_numOrbits) {
-			addOrbit(new Orbit(sun, i + 1, (i + 1) * 2));
+
+		while (p_numOrbits > 0) {
+			addOrbit(new Orbit(sun, p_numOrbits, p_numOrbits * 2));
+			p_numOrbits--;
 		}
+		// for (i in 0...p_numOrbits) {
+		// 	addOrbit(new Orbit(sun, i + 1, (i + 1) * 2));
+		// }
 	}
 
 	private function addPlanetoid(e : Entity) : Void

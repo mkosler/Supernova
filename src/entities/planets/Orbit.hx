@@ -10,6 +10,9 @@ import com.haxepunk.utils.Draw;
 // Game imports
 import entities.planets.Sun;
 import entities.planets.Planet;
+import entities.planets.FoodPlanet;
+import entities.planets.AttackPlanet;
+import entities.planets.DefendPlanet;
 
 class Orbit extends Entity 
 {
@@ -31,20 +34,33 @@ class Orbit extends Entity
 		x = sun.centerX - ((baseSize * p_size) / 2);
 		y = sun.centerY - ((baseSize * p_size) / 2);
 		radius = sun.centerX - x;
-		trace("Orbit size[" + size + "].radius = " + radius);
-		HXP.console.log([x, sun.centerX]);
 		type = "orbit";
 		mask = new Circle(Std.int(radius), Std.int(radius), Std.int(radius));
 	}
 
-	public function addPlanet(p_planet : Planet) : Bool
+	public function addPlanet(p_name : String, p_angle : Float) : Bool
 	{
-		if (numPlanetsHeld < maxPlanets) {
-			numPlanetsHeld++;
-			p_planet.radius = radius;
-			return true;
-		} else {
-			return false;
+		if (numPlanetsHeld >= maxPlanets) return false;
+
+		trace("Pulling planet: " + p_name);
+		numPlanetsHeld++;
+		var planet : Planet = pullPlanet(p_name, p_angle);
+		HXP.world.add(planet);
+		return true;
+	}
+
+	private function pullPlanet(p_name : String, p_angle : Float) : Planet
+	{
+		switch (p_name) {
+		case "food":
+			trace("Found planet " + p_name);
+			return new FoodPlanet(p_angle, radius, sun);
+		case "attack":
+			return new AttackPlanet(p_angle, radius, sun);
+		case "defend":
+			return new DefendPlanet(p_angle, radius, sun);
+		default:
+			return null;
 		}
 	}
 

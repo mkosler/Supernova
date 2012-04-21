@@ -16,48 +16,25 @@ import entities.planets.DefendPlanet;
 class PlanetButton extends Entity 
 {
 	private var image : Image;
-	private var name : String;
+	public var name : String;
 	public var sun : Sun;
-	public var occupied : Bool;
+	static public inline var scale : Int = 3;
 
 	public function new(p_x : Float, p_y : Float, p_image : Image, p_name : String, p_cost : Int, p_sun : Sun)
 	{
 		super(p_x, p_y);
 
 		image = p_image;
-		image.scale = 3;
+		image.scale = scale;
 		graphic = image;
 		name = p_name;
 		type = "button";
 		sun = p_sun;
 		setHitbox(image.scaledWidth, image.scaleHeight);
-		occupied = false;
 	}
 
 	public override function update() : Void 
 	{
 		super.update();
-
-		if (collidePoint(x, y, Input.mouseX, Input.mouseY)) {
-			if (Input.mousePressed && !occupied) {
-				trace("Pulling planet");
-				HXP.world.add(pullPlanet());
-				occupied = true;
-			}
-		}
-	}
-
-	private function pullPlanet() : Planet
-	{
-		switch (name) {
-			case "food":
-				return new FoodPlanet(Input.mouseX, Input.mouseY, sun);
-			case "attack":
-				return new AttackPlanet(Input.mouseX, Input.mouseY, sun);
-			case "defend":
-				return new DefendPlanet(Input.mouseX, Input.mouseY, sun);
-			default:
-				return null;
-		}
 	}
 }

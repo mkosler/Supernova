@@ -9,11 +9,13 @@ import com.haxepunk.graphics.Image;
 
 // Game imports
 import ui.PlanetButton;
+import ui.Cursor;
 import entities.planets.SolarSystem;
 
 class GameWorld extends World 
 {
 	public var solarSystem : SolarSystem;
+	public var cursor : Cursor;
 
 	public function new()
 	{
@@ -39,6 +41,9 @@ class GameWorld extends World
 		add(new PlanetButton(25, 100, new Image("gfx/planets/food.png"), "food", 20, solarSystem.sun));
 		add(new PlanetButton(25, 300, new Image("gfx/planets/attack.png"), "attack", 20, solarSystem.sun));
 		add(new PlanetButton(25, 500, new Image("gfx/planets/defend.png"), "defend", 20, solarSystem.sun));
+
+		cursor = new Cursor();
+		add(cursor);
 	}
 
 	public override function update() : Void 
