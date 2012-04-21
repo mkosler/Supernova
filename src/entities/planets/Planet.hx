@@ -28,16 +28,10 @@ class Planet extends Entity
 		super(p_x, p_y);
 
 		isHeld = true;
-
-		mask = new Circle(16, Std.int(p_x), Std.int(p_y));
+		mask = new Circle(8, 8, 8);
 		type = "planet";
-		setOrigin(Std.int(p_x + 8), Std.int(p_y + 8));
-
 		health = p_health;
-		// rotSpeed = p_rotSpeed;
 		level = 1;
-		// radius = p_currentOrbit.radius;
-		// angle = p_angle;
 		sun = p_sun;
 	}
 
@@ -45,16 +39,25 @@ class Planet extends Entity
 	{
 		super.update();
 
-		// Ugly...ugly...ugly...
-		release();
-
 		if (isHeld) {
 			x = Input.mouseX;
 			y = Input.mouseY;
+			if (Input.mousePressed) {
+				var collideObjs : Array<Entity> = new Array<Entity>();
+				collideInto("orbit", x, y, collideObjs);
+				trace("Attempting to place planet : " + collideObjs.length);
+				if (collideObjs.length > 0) {
+					var orbit : Orbit = cast(collideObjs[collideObjs.length - 1], Orbit);
+					if (orbit.addPlanet(this)) {
+						trace("Toggling held");
+						isHeld = false;
+					}
+				}
+			}
 		} else {
 			var radians : Float = angle * (Math.PI / 180);
-			x = sun.originX + (radius * Math.cos(radians));
-			y = sun.originY + (radius * Math.sin(radians));
+			x = sun.centerX + (radius * Math.cos(radians));
+			y = sun.centerY + (radius * Math.sin(radians));
 
 			angle += rotSpeed;
 			angle %= 360;
@@ -62,25 +65,6 @@ class Planet extends Entity
 			var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 			if (collideObj != null) {
 				// Do stuff
-			}
-		}
-	}
-
-	private function release() : Void
-	{
-		if (!isHeld) return;
-
-		if (Input.mousePressed) {
-			trace("Attempting to place planet...");
-			var collideObjs : Array<Entity> = new Array<Entity>();
-
-			collideTypesInto(["orbit"], x, y, collideObjs);
-			if (collideObjs.length > 0) {
-				var orbit : Orbit = cast(collideObjs[collideObjs.length - 1], Orbit);
-				if (orbit.addPlanet(this)) {
-					trace("Toggling held");
-					isHeld = false;
-				}
 			}
 		}
 	}

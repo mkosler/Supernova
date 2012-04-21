@@ -24,19 +24,17 @@ class Orbit extends Entity
 	{
 		super();
 
+		sun = p_sun;
 		numPlanetsHeld = 0;
 		size = Std.int(Math.min(Math.max(p_size, 0), 5));
 		maxPlanets = p_maxPlanets;
-		x = p_sun.originX - ((baseSize * p_size) / 2);
-		y = p_sun.originY - ((baseSize * p_size) / 2);
-		setOrigin(p_sun.originX, p_sun.originY);
-		radius = distanceToPoint(Std.int(p_sun.originX), Std.int(p_sun.originY));
+		x = sun.centerX - ((baseSize * p_size) / 2);
+		y = sun.centerY - ((baseSize * p_size) / 2);
+		radius = sun.centerX - x;
+		trace("Orbit size[" + size + "].radius = " + radius);
+		HXP.console.log([x, sun.centerX]);
 		type = "orbit";
-		var circle : Circle = new Circle(Std.int(radius), p_sun.originX, p_sun.originY);
-		mask = circle;
-		trace("Sun origin (" + p_sun.originX + ", " + p_sun.originY + ")");
-		trace("Mask position (" + circle.x + ", " + circle.y + ")");
-		sun = p_sun;
+		mask = new Circle(Std.int(radius), Std.int(radius), Std.int(radius));
 	}
 
 	public function addPlanet(p_planet : Planet) : Bool
@@ -55,6 +53,6 @@ class Orbit extends Entity
 		super.render();
 
 		Draw.resetTarget();
-		Draw.circle(sun.originX, sun.originY, Std.int(radius), 0xFFFFFF);
+		Draw.circle(Std.int(sun.centerX), Std.int(sun.centerY), Std.int(radius), 0xFFFFFF);
 	}
 }
