@@ -19,11 +19,11 @@ class Planet extends Entity
 	private var rotSpeed : Float;
 	public var level : Int;
 	private var sun : Sun;
-	private var radius : Float;
+	public var radius : Float;
 	private var angle : Float;
 
 	// public function new(p_x : Float, p_y : Float, p_health : Int, p_rotSpeed : Float, p_sun : Sun, p_currentOrbit : Orbit, p_angle : Int)
-	public function new(p_x : Float, p_y : Float, p_health : Int)
+	public function new(p_x : Float, p_y : Float, p_health : Int, p_sun : Sun)
 	{
 		super(p_x, p_y);
 
@@ -38,12 +38,15 @@ class Planet extends Entity
 		level = 1;
 		// radius = p_currentOrbit.radius;
 		// angle = p_angle;
-		// sun = p_sun;
+		sun = p_sun;
 	}
 
 	public override function update() : Void 
 	{
 		super.update();
+
+		// Ugly...ugly...ugly...
+		release();
 
 		if (isHeld) {
 			x = Input.mouseX;
@@ -59,6 +62,25 @@ class Planet extends Entity
 			var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 			if (collideObj != null) {
 				// Do stuff
+			}
+		}
+	}
+
+	private function release() : Void
+	{
+		if (!isHeld) return;
+
+		if (Input.mousePressed) {
+			trace("Attempting to place planet...");
+			var collideObjs : Array<Entity> = new Array<Entity>();
+
+			collideTypesInto(["orbit"], x, y, collideObjs);
+			if (collideObjs.length > 0) {
+				var orbit : Orbit = cast(collideObjs[collideObjs.length - 1], Orbit);
+				if (orbit.addPlanet(this)) {
+					trace("Toggling held");
+					isHeld = false;
+				}
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package;
 // Library imports
 import com.haxepunk.Engine;
 import com.haxepunk.HXP;
+import com.haxepunk.utils.Key;
 
 // Game imports
 import worlds.GameWorld;
@@ -24,6 +25,7 @@ class Main extends Engine
 	override public function init()
 	{
 		HXP.console.enable();
+		HXP.console.toggleKey = Key.TAB;
 
 		HXP.screen.color = kClearColor;
 		HXP.screen.scale = 1;

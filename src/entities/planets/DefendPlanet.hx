@@ -10,9 +10,9 @@ import entities.planets.Orbit;
 
 class DefendPlanet extends Planet 
 {
-	public function new(p_x : Float, p_y : Float, p_rotSpeed : Float, p_sun : Sun, p_currentOrbit : Orbit, p_angle : Int)
+	public function new(p_x : Float, p_y : Float, p_sun : Sun)
 	{
-		super(p_x, p_y, 40, p_rotSpeed, p_sun, p_currentOrbit, p_angle);
+		super(p_x, p_y, 40, p_sun);
 
 		graphic = new Image("gfx/planets/defend.png");
 	}

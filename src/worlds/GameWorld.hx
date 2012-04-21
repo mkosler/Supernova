@@ -8,22 +8,12 @@ import com.haxepunk.graphics.Backdrop;
 import com.haxepunk.graphics.Image;
 
 // Game imports
-import entities.planets.Sun;
-import entities.planets.FoodPlanet;
-import entities.planets.AttackPlanet;
-import entities.planets.DefendPlanet;
-import entities.planets.Orbit;
-import entities.HealthBar;
+import ui.PlanetButton;
+import entities.planets.SolarSystem;
 
-/// Used as a testing bed
 class GameWorld extends World 
 {
-	public var sun : Sun;
-	static public inline var tempSpeed = 2;
-	private var tempOrbit : Orbit;
-	private var tempFood : FoodPlanet;
-	private var tempAttack : AttackPlanet;
-	private var tempDefend : DefendPlanet;
+	public var solarSystem : SolarSystem;
 
 	public function new()
 	{
@@ -31,22 +21,10 @@ class GameWorld extends World
 
 		addGraphic(new Backdrop("gfx/background.png"));
 
-		sun = new Sun(HXP.halfWidth - 32, HXP.halfHeight - 32, 10, 100, 3, 64);
-		add(sun);
-		add(new HealthBar(sun));
-
-		// TEMP TESTING
-		tempOrbit = new Orbit(sun, 1, 10);
-		add(tempOrbit);
-		tempFood = new FoodPlanet(tempOrbit.x, HXP.halfHeight, 20, tempSpeed, sun, tempOrbit, 0);
-		add(tempFood);
-		add(new HealthBar(tempFood));
-		tempAttack = new AttackPlanet(tempOrbit.x + tempOrbit.width, HXP.halfHeight, 10, tempSpeed, sun, tempOrbit, 90);
-		add(tempAttack);
-		add(new HealthBar(tempAttack));
-		tempDefend = new DefendPlanet(tempOrbit.x + (tempOrbit.width / 2), HXP.halfHeight - (tempOrbit.height / 2), 40, tempSpeed, sun, tempOrbit, 180);
-		add(tempDefend);
-		add(new HealthBar(tempDefend));
+		solarSystem = new SolarSystem(100, 3);
+		for (e in solarSystem.entities) {
+			add(e);
+		}
 
 		// UI plates
 		var plateLeft : Entity = addGraphic(new Image("gfx/plate.png"));
@@ -57,6 +35,10 @@ class GameWorld extends World
 
 		plateRight.x = HXP.width - 90;
 		plateRight.y = 0;
+
+		add(new PlanetButton(25, 100, new Image("gfx/planets/food.png"), "food", 20, solarSystem.sun));
+		add(new PlanetButton(25, 300, new Image("gfx/planets/attack.png"), "attack", 20, solarSystem.sun));
+		add(new PlanetButton(25, 500, new Image("gfx/planets/defend.png"), "defend", 20, solarSystem.sun));
 	}
 
 	public override function update() : Void 

@@ -11,24 +11,21 @@ import com.haxepunk.HXP;
 class Sun extends Entity 
 {
 	public var gravity : Float;
-	private var sunWell : SunWell;
 	private var health : Int;
-	private var numOrbits : Int;
 
 	// Health bar stuff
 	private var health_image : Image;
 	static public inline var damageColorFlip = 0x001111;
 
-	public function new(p_x : Float, p_y : Float, p_grav : Float, p_health : Int, p_numOrbits : Int, p_wellRadius : Int = 64)
+	public function new(p_health : Int)
 	{
-		super(p_x, p_y, new Image("gfx/planets/sun.png"));
+		var image : Image = new Image("gfx/planets/sun.png");
+		super(HXP.halfWidth - (image.width / 2), HXP.halfHeight - (image.height / 2), image);
 
-		mask = new Circle(32, Std.int(p_x), Std.int(p_y));
+		mask = new Circle(32, Std.int(x), Std.int(y));
 		type = "sun";
-		setOrigin(Std.int(p_x + (width / 2)), Std.int(p_y + (height / 2)));
-		sunWell = new SunWell(originX, originY, p_wellRadius);
+		setOrigin(Std.int(x + (width / 2)), Std.int(y + (height / 2)));
 		health = p_health;
-		numOrbits = p_numOrbits;
 	}
 
 	public override function update() : Void 
@@ -42,12 +39,12 @@ class Sun extends Entity
 	}
 }
 
-private class SunWell extends Entity
-{
-	public function new(p_x : Float, p_y : Float, p_wellRadius : Int)
-	{
-		super(p_x, p_y);
-		mask = new Circle(p_wellRadius, Std.int(p_x), Std.int(p_y));
-		type = "well";
-	}
-}
+// private class SunWell extends Entity
+// {
+// 	public function new(p_x : Float, p_y : Float, p_wellRadius : Int)
+// 	{
+// 		super(p_x, p_y);
+// 		mask = new Circle(p_wellRadius, Std.int(p_x), Std.int(p_y));
+// 		type = "well";
+// 	}
+// }
