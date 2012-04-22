@@ -17,7 +17,6 @@ import entities.planets.DefendPlanet;
 class Orbit extends Entity 
 {
 	public var numPlanetsHeld : Int;
-	private var maxPlanets : Int;
 	public var radius : Float;
 	private var sun : Sun;
 	private var size : Int;
@@ -30,7 +29,6 @@ class Orbit extends Entity
 		sun = p_sun;
 		numPlanetsHeld = 0;
 		size = Std.int(Math.min(Math.max(p_size, 0), 5));
-		maxPlanets = p_maxPlanets;
 		x = sun.centerX - ((baseSize * p_size) / 2);
 		y = sun.centerY - ((baseSize * p_size) / 2);
 		radius = sun.centerX - x;
@@ -40,8 +38,6 @@ class Orbit extends Entity
 
 	public function addPlanet(p_name : String, p_angle : Float) : Bool
 	{
-		if (numPlanetsHeld >= maxPlanets) return false;
-
 		trace("Pulling planet: " + p_name);
 		numPlanetsHeld++;
 		var planet : Planet = pullPlanet(p_name, p_angle);
@@ -68,7 +64,6 @@ class Orbit extends Entity
 	{
 		super.render();
 
-		Draw.resetTarget();
 		Draw.circle(Std.int(sun.centerX), Std.int(sun.centerY), Std.int(radius), 0xEEEEEE);
 	}
 }

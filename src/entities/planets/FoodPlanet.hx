@@ -75,9 +75,10 @@ private class Food extends Entity
 		super.update();
 
 		moveBy(speedX, speedY, "cursor");
-		// if (!collideRect(x, y, 90, 0, HXP.width - 90, HXP.height)) {
-		// 	HXP.world.remove(this);
-		// }
+		if (!collideRect(x, y, 0, 0, HXP.width, HXP.height)) {
+			trace("Removing lost food");
+			HXP.world.remove(this);
+		}
 	}
 
 	public override function moveCollideX(e : Entity) : Void

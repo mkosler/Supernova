@@ -121,7 +121,7 @@ class Cursor extends Entity
 		if (p_x <= p_baseX) {
 			return Math.PI + a;
 		} else {
-			return ((2 *Math.PI) + a) % (2 * Math.PI);
+			return ((2 * Math.PI) + a) % (2 * Math.PI);
 		}
 	}
 }

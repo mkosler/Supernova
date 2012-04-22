@@ -21,12 +21,27 @@ class Ship extends Entity
 	private var radius : Int;
 	private var delay : Float;
 
-	public function new(p_x : Float, p_y : Float, p_image : Image, p_speedX : Float, p_speedY : Float, p_sun : Sun, ?p_health : Int = 1, ?p_damageValue = 1, p_delay : Float)
+	public function new(p_image : Image, p_speedX : Float, p_speedY : Float, p_sun : Sun, ?p_health : Int = 1, ?p_damageValue = 1, p_delay : Float)
 	{
 		super();
 
-		x = p_x;
-		y = p_y;
+		if (HXP.random < 0.5) {
+			// Do stuff
+			if (HXP.random < 0.5) {
+				x = 0;
+			} else {
+				x = HXP.width;
+			}
+			y = HXP.height * HXP.random;
+		} else {
+			// Do other stuff
+			if (HXP.random < 0.5) {
+				y = 0;
+			} else {
+				y = HXP.height;
+			}
+			x = HXP.width * HXP.random;
+		}
 		graphic = p_image;
 		radius = Std.int(p_image.width / 2);
 		trace("Radius of ship: " + radius);

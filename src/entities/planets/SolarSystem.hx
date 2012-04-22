@@ -11,6 +11,7 @@ import entities.planets.Sun;
 import entities.planets.Orbit;
 import entities.HealthBar;
 import entities.ships.SimpleShip;
+import entities.ships.MotherShip;
 
 class SolarSystem 
 {
@@ -26,9 +27,6 @@ class SolarSystem
 	public var sun : Sun;
 	private var health : Int;
 	private var healthBar : HealthBar;
-
-	// Orbit stuff
-	// private var orbits : Array<Orbit>;
 
 	public function new(p_health : Int, p_numOrbits : Int)
 	{
@@ -66,14 +64,19 @@ class SolarSystem
 		timer += HXP.elapsed;
 
 		// MORE UGLY...JUST WORK DAMN IT!
-		healthBar.applyDamage(health - sun.health);
-		health = sun.health;
+		// healthBar.applyDamage(health - sun.health);
+		// health = sun.health;
 
 		if (timer >= delay * (5 - wave)) {
 			trace("Incoming enemy!");
 			timer = 0;
-			delay -= 0.1;
-			HXP.world.add(new SimpleShip(HXP.width * HXP.random, HXP.height * HXP.random, 4, 4, sun));
+			delay = Math.max(0.4, delay - 0.1);
+			if (HXP.random < 0.05) {
+				HXP.world.add(new MotherShip(this));
+			} else {
+				HXP.world.add(new SimpleShip(sun));
+			}
+			trace("New delay: " + delay);
 		}
 	}
 }

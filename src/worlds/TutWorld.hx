@@ -49,7 +49,7 @@ class TutWorld extends World
 	public function prevCallback() : Void 
 	{
 		trace("Inside prevCallback");
-		pageNum = Std.int(Math.min(--pageNum, 0));
+		pageNum = Std.int(Math.max(pageNum - 1, 0));
 		makeVisible(pageNum);
 	}
 

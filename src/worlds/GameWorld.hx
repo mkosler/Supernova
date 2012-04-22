@@ -18,6 +18,7 @@ import entities.planets.Sun;
 import entities.planets.FoodPlanet;
 import entities.planets.AttackPlanet;
 import entities.planets.DefendPlanet;
+import entities.HealthBar;
 
 class GameWorld extends World 
 {
@@ -66,28 +67,16 @@ class GameWorld extends World
 		// Ugliest thing I have ever done
 		var costString : String = "Cost: ";
 		foodButton = cast(add(new PlanetButton(25, 100, new Image("gfx/planets/food.png"), "food", 20, solarSystem.sun)), PlanetButton);
-		foodText = addGraphic(new Text(costString + foodButton.cost));
-		foodText.x = foodButton.x - 10;
-		foodText.y = foodButton.y + foodButton.height + 10;
-		foodText.layer = 0;
+		foodText = addGraphic(new Text("FOOD\n" + costString + foodButton.cost), 0, foodButton.x - 10, foodButton.y + foodButton.height + 10);
 
 		attackButton = cast(add(new PlanetButton(25, 200, new Image("gfx/planets/attack.png"), "attack", 20, solarSystem.sun)), PlanetButton);
-		attackText = addGraphic(new Text(costString + attackButton.cost));
-		attackText.x = attackButton.x - 10;
-		attackText.y = attackButton.y + attackButton.height + 10;
-		attackText.layer = 0;
+		attackText = addGraphic(new Text("ATT\n" + costString + attackButton.cost), 0, attackButton.x - 10, attackButton.y + attackButton.height + 10);
 
 		defendButton = cast(add(new PlanetButton(25, 300, new Image("gfx/planets/defend.png"), "defend", 20, solarSystem.sun)), PlanetButton);
-		defendText = addGraphic(new Text(costString + defendButton.cost));
-		defendText.x = defendButton.x - 10;
-		defendText.y = defendButton.y + defendButton.height + 10;
-		defendText.layer = 0;
+		defendText = addGraphic(new Text("DEF\n" + costString + defendButton.cost), 0, defendButton.x - 10, defendButton.y + defendButton.height + 10);
 
 		upgradeButton = cast(add(new PlanetButton(25, 400, new Image("gfx/upgrade.png"), "upgrade", 35, solarSystem.sun)), PlanetButton);
-		upgradeText = addGraphic(new Text(costString + upgradeButton.cost));
-		upgradeText.x = upgradeButton.x - 10;
-		upgradeText.y = upgradeButton.y + upgradeButton.height + 10;
-		upgradeText.layer = 0;
+		upgradeText = addGraphic(new Text("UP\n" + costString + upgradeButton.cost), 0, upgradeButton.x - 10, upgradeButton.y + upgradeButton.height + 10);
 
 		cursor = new Cursor();
 		add(cursor);
@@ -158,5 +147,14 @@ class GameWorld extends World
 				e.paused = paused;
 			}
 		}
+	}
+
+	public override function add(e : Entity) : Entity
+	{
+		if (e.type == "planet") {
+			add(new HealthBar(e));
+		}
+
+		return super.add(e);
 	}
 }

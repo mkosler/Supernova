@@ -2,35 +2,47 @@ package entities;
 
 // Library imports
 import com.haxepunk.Entity;
-import com.haxepunk.graphics.Image;
-import com.haxepunk.tweens.misc.ColorTween;
+import com.haxepunk.utils.Draw;
 
 // Game imports
+import entities.planets.Planet;
+import entities.planets.Sun;
 
 class HealthBar extends Entity 
 {
-	private var attachedEntity : Entity;
-	private var image : Image;
-	static public inline var damageColorFlip = 0x000001;
+	// Ugly, hack way to get sun and planets
+	private var attachedPlanet : Planet;
+	private var attachedSun : Sun;
+	private var health : Int;
 
 	public function new(p_entity : Entity)
 	{
 		super(p_entity.x - 5, p_entity.y - 5);
 
-		image = new Image("gfx/healthbar.png");
-		graphic = image;
-		attachedEntity = p_entity;
+		health = 0;
+
+		// I feel so dirty
+		if (Std.is(p_entity, Sun)) {
+			attachedSun = cast(p_entity, Sun);
+			attachedPlanet = null;
+		} else {
+			attachedSun = null;
+			attachedPlanet = cast(p_entity, Planet);
+		}
 	}
 
 	public override function update() : Void 
 	{
-		x = attachedEntity.x + (attachedEntity.width / 2) - (image.width / 2);
-		y = attachedEntity.y - 10;
+		// /shivers
+		health = attachedSun != null ? attachedSun.health : attachedPlanet.health;
+		x = attachedSun != null ? attachedSun.x + (attachedSun.width / 2) - (health / 2) : attachedPlanet.x + (attachedPlanet.width / 2) - (health / 2);
+		y = attachedSun != null ? attachedSun.y - 10 : attachedPlanet.y - 10;
 	}
 
-	public function applyDamage(p_damage : Float) 
+	public override function render() : Void
 	{
-		if (p_damage <= 0) return;
-		image.color -= Std.int(damageColorFlip * p_damage);
+		super.render();
+
+		Draw.line(Std.int(x), Std.int(y), Std.int(x + health), Std.int(y), 0x00FF00);
 	}
 }

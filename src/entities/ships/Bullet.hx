@@ -10,13 +10,9 @@ import entities.ships.Ship;
 
 class Bullet extends Entity 
 {
-	// private var targetX : Float;
-	// private var targetY : Float;
 	private var speedX : Float;
 	private var speedY : Float;
 	public var damageValue : Int;
-	// static public inline var speed : Float = 5.0;
-	private var speed : Float;
 
 	public function new(p_ship : Ship, p_targetX : Int, p_targetY : Int)
 	{
@@ -28,9 +24,6 @@ class Bullet extends Entity
 		speedX = 5 * Math.cos(a);
 		speedY = 5 * Math.sin(a);
 		damageValue = p_ship.damageValue;
-
-		trace("Bullet target...");
-		HXP.console.log([x, y, p_targetX, p_targetY]);
 	}
 
 	public override function update() : Void
@@ -38,6 +31,10 @@ class Bullet extends Entity
 		super.update();
 
 		moveBy(speedX, speedY, "planet");
+		if (!collideRect(x, y, 0, 0, HXP.width, HXP.height)) {
+			trace("Removing lost bullet");
+			HXP.world.remove(this);
+		}
 	}
 
 	public override function moveCollideX(e : Entity) : Void
@@ -56,7 +53,7 @@ class Bullet extends Entity
 		if (p_x <= p_baseX) {
 			return Math.PI + a;
 		} else {
-			return ((2 *Math.PI) + a) % (2 * Math.PI);
+			return ((2 * Math.PI) + a) % (2 * Math.PI);
 		}
 	}
 }

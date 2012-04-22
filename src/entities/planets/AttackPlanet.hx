@@ -13,7 +13,7 @@ import entities.ships.Ship;
 
 class AttackPlanet extends Planet 
 {
-	static public inline var delay : Float = 3.5;
+	static public inline var delay : Float = 3.0;
 	private var timer : Float;
 	private var canLaunch : Bool;
 
@@ -47,7 +47,7 @@ class AttackPlanet extends Planet
 
 private class Missile extends Entity 
 {
-	static public inline var speed : Float = 3.0;
+	static public inline var speed : Float = 4.5;
 	private var target : Entity;
 	private var sun : Sun;
 
@@ -66,9 +66,6 @@ private class Missile extends Entity
 		super.update();
 
 		moveTowards(target.x, target.y, speed, "ship");
-		if (sun.x <= target.x && target.x <= sun.x + sun.width && sun.y <= target.y && target.y <= sun.y + sun.height) {
-			HXP.world.remove(this);
-		}
 	}
 
 	public override function moveCollideX(e : Entity) : Void 

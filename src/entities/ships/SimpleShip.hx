@@ -12,9 +12,9 @@ import entities.planets.Sun;
 
 class SimpleShip extends Ship 
 {
-	public function new(p_x : Float, p_y : Float, p_speedX : Float, p_speedY : Float, p_sun : Sun)
+	public function new(p_sun : Sun)
 	{
-		super(p_x, p_y, new Image("gfx/simpleship.png"), p_speedX, p_speedY, p_sun, 1, 1, 1.75);
+		super(new Image("gfx/simpleship.png"), 4, 4, p_sun, 1, 1, 1.75);
 	}
 
 	public override function update() : Void 
