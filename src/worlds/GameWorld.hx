@@ -15,6 +15,9 @@ import ui.PlanetButton;
 import ui.Cursor;
 import entities.planets.SolarSystem;
 import entities.planets.Sun;
+import entities.planets.FoodPlanet;
+import entities.planets.AttackPlanet;
+import entities.planets.DefendPlanet;
 
 class GameWorld extends World 
 {
@@ -29,12 +32,18 @@ class GameWorld extends World
 	private var upgradeButton : PlanetButton;
 	private var upgradeText : Entity;
 	private var resourceText : Entity;
+	private var foodPlanetText : Entity;
+	private var attackPlanetText : Entity;
+	private var defendPlanetText : Entity;
 	private var paused : Bool;
 
 	public function new()
 	{
 		super();
+	}
 
+	public override function begin() : Void
+	{
 		addGraphic(new Backdrop("gfx/background.png"));
 
 		solarSystem = new SolarSystem(100, 3);
@@ -79,14 +88,33 @@ class GameWorld extends World
 		upgradeText.x = upgradeButton.x - 10;
 		upgradeText.y = upgradeButton.y + upgradeButton.height + 10;
 		upgradeText.layer = 0;
-		// /end ugly
 
 		cursor = new Cursor();
 		add(cursor);
-		resourceText = addGraphic(new Text("Total food:\n" + cursor.totalResources));
+		resourceText = addGraphic(new Text("Food " + cursor.totalResources));
 		resourceText.x = plateRight.x + 10;
 		resourceText.y = 100;
 		resourceText.layer = 0;
+
+		// slightly less ugly
+		var foodPlanetImage : Image = new Image("gfx/planets/food.png");
+		foodPlanetImage.scale = 3;
+		addGraphic(foodPlanetImage, 0, resourceText.x, 200);
+
+		foodPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 250);
+
+		var attackPlanetImage : Image = new Image("gfx/planets/attack.png");
+		attackPlanetImage.scale = 3;
+		addGraphic(attackPlanetImage, 0, resourceText.x, 300);
+
+		attackPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 350);
+
+		var defendPlanetImage : Image = new Image("gfx/planets/defend.png");
+		defendPlanetImage.scale = 3;
+		addGraphic(defendPlanetImage, 0, resourceText.x, 400);
+
+		defendPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 450);
+		// /end ugly
 
 		Input.define("Pause", [Key.P, Key.SPACE]);
 		paused = false;
@@ -98,8 +126,28 @@ class GameWorld extends World
 
 		solarSystem.update();
 
+		if (solarSystem.sun.health <= 0) {
+			// HXP.world = new DeadWorld();
+		}
+
 		var label : Text = cast(resourceText.graphic, Text);
 		label.text = "Food " + cursor.totalResources;
+
+		// OH GOD ITS SO UGLY
+		var foodPlanets : Array<Entity> = new Array<Entity>();
+		getClass(FoodPlanet, foodPlanets);
+		label = cast(foodPlanetText.graphic, Text);
+		label.text = Std.string(foodPlanets.length);
+
+		var attackPlanets : Array<Entity> = new Array<Entity>();
+		getClass(AttackPlanet, attackPlanets);
+		label = cast(attackPlanetText.graphic, Text);
+		label.text = Std.string(attackPlanets.length);		
+
+		var defendPlanets : Array<Entity> = new Array<Entity>();
+		getClass(DefendPlanet, defendPlanets);
+		label = cast(defendPlanetText.graphic, Text);
+		label.text = Std.string(defendPlanets.length);
 
 		if (Input.pressed("Pause")) {
 			paused = !paused;

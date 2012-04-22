@@ -110,6 +110,11 @@ class ApplicationMain {
             return Assets.getBitmapData ("gfx/background.png");
          
 		
+		if (inName=="gfx/title.png")
+			 
+            return Assets.getBitmapData ("gfx/title.png");
+         
+		
 		if (inName=="gfx/planets/attack.png")
 			 
             return Assets.getBitmapData ("gfx/planets/attack.png");
@@ -153,6 +158,36 @@ class ApplicationMain {
 		if (inName=="gfx/upgrade.png")
 			 
             return Assets.getBitmapData ("gfx/upgrade.png");
+         
+		
+		if (inName=="gfx/tutorial/Screenshot at 2012-04-22 09:17:24.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/Screenshot at 2012-04-22 09:17:24.png");
+         
+		
+		if (inName=="gfx/tutorial/tutpage1.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/tutpage1.png");
+         
+		
+		if (inName=="gfx/tutorial/solarsystem.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/solarsystem.png");
+         
+		
+		if (inName=="gfx/tutorial/buybar.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/buybar.png");
+         
+		
+		if (inName=="gfx/tutorial/resourcebar.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/resourcebar.png");
+         
+		
+		if (inName=="gfx/tutorial/tutpage2.png")
+			 
+            return Assets.getBitmapData ("gfx/tutorial/tutpage2.png");
          
 		
 		if (inName=="font/04B_03__.ttf")
@@ -230,6 +265,10 @@ class ApplicationMain {
 	
 
 	
+		class NME_gfx_title_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
 		class NME_gfx_planets_attack_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
@@ -263,6 +302,30 @@ class ApplicationMain {
 
 	
 		class NME_gfx_upgrade_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_screenshot_at_2012_04_22_09_17_24_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_tutpage1_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_solarsystem_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_buybar_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_resourcebar_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_tutorial_tutpage2_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	

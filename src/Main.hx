@@ -6,7 +6,7 @@ import com.haxepunk.HXP;
 import com.haxepunk.utils.Key;
 
 // Game imports
-import worlds.GameWorld;
+import worlds.TutWorld;
 
 class Main extends Engine
 {
@@ -29,7 +29,7 @@ class Main extends Engine
 
 		HXP.screen.color = kClearColor;
 		HXP.screen.scale = 1;
-		HXP.world = new GameWorld();
+		HXP.world = new TutWorld();
 	}
 
 	public static function main()

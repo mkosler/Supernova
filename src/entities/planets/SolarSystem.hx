@@ -25,6 +25,7 @@ class SolarSystem
 	// Sun stuff
 	public var sun : Sun;
 	private var health : Int;
+	private var healthBar : HealthBar;
 
 	// Orbit stuff
 	// private var orbits : Array<Orbit>;
@@ -38,6 +39,7 @@ class SolarSystem
 		countTilNextWave = 10 * (wave + 1);
 
 		sun = new Sun(p_health);
+		health = p_health;
 		addPlanetoid(sun);
 
 		// orbits = new Array<Orbit>();
@@ -51,7 +53,7 @@ class SolarSystem
 	private function addPlanetoid(e : Entity) : Void
 	{
 		entities.push(e);
-		entities.push(new HealthBar(e));
+		entities.push((healthBar = new HealthBar(e)));
 	}
 
 	private function addOrbit(o : Orbit) : Void 
@@ -62,11 +64,15 @@ class SolarSystem
 	public function update() : Void 
 	{
 		timer += HXP.elapsed;
-		// HXP.console.log([timer]);
+
+		// MORE UGLY...JUST WORK DAMN IT!
+		healthBar.applyDamage(health - sun.health);
+		health = sun.health;
+
 		if (timer >= delay * (5 - wave)) {
 			trace("Incoming enemy!");
 			timer = 0;
-			delay -= 0.02;
+			delay -= 0.1;
 			HXP.world.add(new SimpleShip(HXP.width * HXP.random, HXP.height * HXP.random, 4, 4, sun));
 		}
 	}

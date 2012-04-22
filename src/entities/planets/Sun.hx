@@ -13,7 +13,7 @@ import entities.ships.Ship;
 class Sun extends Entity 
 {
 	public var gravity : Float;
-	private var health : Int;
+	public var health : Int;
 
 	// Health bar stuff
 	private var health_image : Image;

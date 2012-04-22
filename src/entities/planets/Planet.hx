@@ -48,13 +48,17 @@ class Planet extends Entity
 
 		if (paused) return;
 
+		if (health <= 0) {
+			trace("Planet destroyed!");
+			HXP.world.remove(this);
+		}
+
 		var radians : Float = angle * (Math.PI / 180);
 		x = sun.centerX + (radius * Math.cos(radians));
 		y = sun.centerY + (radius * Math.sin(radians));
 		angle += rotSpeed;
 		angle %= 360;
 
-		// var collideObj : Entity = collide("bullet", x, y);
 		var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {
 			if (collideObj.type == "ship") {

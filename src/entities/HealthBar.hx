@@ -11,7 +11,7 @@ class HealthBar extends Entity
 {
 	private var attachedEntity : Entity;
 	private var image : Image;
-	static public inline var damageColorFlip = 0x001111;
+	static public inline var damageColorFlip = 0x000001;
 
 	public function new(p_entity : Entity)
 	{
@@ -30,6 +30,7 @@ class HealthBar extends Entity
 
 	public function applyDamage(p_damage : Float) 
 	{
+		if (p_damage <= 0) return;
 		image.color -= Std.int(damageColorFlip * p_damage);
 	}
 }

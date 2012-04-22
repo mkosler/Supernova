@@ -14,7 +14,7 @@ class Ship extends Entity
 	private var speedX : Float;
 	private var speedY : Float;
 	private var sun : Sun;
-	private var health : Int;
+	public var health : Int;
 	public var damageValue : Int;
 	private var timer : Float;
 	private var radius : Int;
@@ -46,16 +46,17 @@ class Ship extends Entity
 	{
 		super.update();
 
+		if (health <= 0) {
+			trace("Ship destroyed!");
+			HXP.world.remove(this);
+		}
+
 		timer += HXP.elapsed;
-		var collideObj : Entity = collideTypes(["planet", "missile", "cursor"], x, y);
-		HXP.console.log([x, y, width, height, Std.string(collideObj != null)]);
+		var collideObj : Entity = collideTypes(["planet", "missile"], x, y);
+		// HXP.console.log([x, y, width, height, Std.string(collideObj != null)]);
 		if (collideObj != null) {
 			trace("Ship hit!");
 			health--;
-			if (health <= 0) {
-				trace("Ship destroyed!");
-				HXP.world.remove(this);
-			}
 		}
 	}
 }

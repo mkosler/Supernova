@@ -52,6 +52,8 @@ class Assets {
 			resourceTypes.set ("gfx/mothership.png", "image");
 			resourceClasses.set ("gfx/background.png", NME_gfx_background_png);
 			resourceTypes.set ("gfx/background.png", "image");
+			resourceClasses.set ("gfx/title.png", NME_gfx_title_png);
+			resourceTypes.set ("gfx/title.png", "image");
 			resourceClasses.set ("gfx/planets/attack.png", NME_gfx_planets_attack_png);
 			resourceTypes.set ("gfx/planets/attack.png", "image");
 			resourceClasses.set ("gfx/planets/sun.png", NME_gfx_planets_sun_png);
@@ -70,6 +72,18 @@ class Assets {
 			resourceTypes.set ("gfx/resource.png", "image");
 			resourceClasses.set ("gfx/upgrade.png", NME_gfx_upgrade_png);
 			resourceTypes.set ("gfx/upgrade.png", "image");
+			resourceClasses.set ("gfx/tutorial/Screenshot at 2012-04-22 09:17:24.png", NME_gfx_tutorial_screenshot_at_2012_04_22_09_17_24_png);
+			resourceTypes.set ("gfx/tutorial/Screenshot at 2012-04-22 09:17:24.png", "image");
+			resourceClasses.set ("gfx/tutorial/tutpage1.png", NME_gfx_tutorial_tutpage1_png);
+			resourceTypes.set ("gfx/tutorial/tutpage1.png", "image");
+			resourceClasses.set ("gfx/tutorial/solarsystem.png", NME_gfx_tutorial_solarsystem_png);
+			resourceTypes.set ("gfx/tutorial/solarsystem.png", "image");
+			resourceClasses.set ("gfx/tutorial/buybar.png", NME_gfx_tutorial_buybar_png);
+			resourceTypes.set ("gfx/tutorial/buybar.png", "image");
+			resourceClasses.set ("gfx/tutorial/resourcebar.png", NME_gfx_tutorial_resourcebar_png);
+			resourceTypes.set ("gfx/tutorial/resourcebar.png", "image");
+			resourceClasses.set ("gfx/tutorial/tutpage2.png", NME_gfx_tutorial_tutpage2_png);
+			resourceTypes.set ("gfx/tutorial/tutpage2.png", "image");
 			resourceClasses.set ("font/04B_03__.ttf", NME_font_04b_03___ttf);
 			resourceTypes.set ("font/04B_03__.ttf", "font");
 			
