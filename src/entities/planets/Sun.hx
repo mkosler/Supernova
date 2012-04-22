@@ -38,8 +38,8 @@ class Sun extends Entity
 
 		var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {
+			trace("Sun has been hit!");
 			if (collideObj.type == "ship") {
-				trace("Sun has been hit!");
 				var ship : Ship = cast(collideObj, Ship);
 				health -= ship.damageValue;
 			} else if (collideObj.type == "bullet") {

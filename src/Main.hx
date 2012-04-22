@@ -7,6 +7,7 @@ import com.haxepunk.utils.Key;
 
 // Game imports
 import worlds.TutWorld;
+import worlds.GameWorld;
 
 class Main extends Engine
 {
@@ -15,7 +16,7 @@ class Main extends Engine
 	public static inline var kScreenHeight:Int = 600;
 	public static inline var kFrameRate:Int = 60;
 	public static inline var kClearColor:Int = 0x333333;
-	public static inline var kProjectName:String = "HaxePunk";
+	public static inline var kProjectName:String = "Supernova";
 
 	public function new()
 	{
@@ -30,6 +31,7 @@ class Main extends Engine
 		HXP.screen.color = kClearColor;
 		HXP.screen.scale = 1;
 		HXP.world = new TutWorld();
+		// HXP.world = new GameWorld();
 	}
 
 	public static function main()

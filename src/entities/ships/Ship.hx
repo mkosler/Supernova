@@ -8,6 +8,7 @@ import com.haxepunk.HXP;
 
 // Game imports
 import entities.planets.Sun;
+import entities.ships.Bullet;
 
 class Ship extends Entity 
 {
@@ -18,8 +19,9 @@ class Ship extends Entity
 	public var damageValue : Int;
 	private var timer : Float;
 	private var radius : Int;
+	private var delay : Float;
 
-	public function new(p_x : Float, p_y : Float, p_image : Image, p_speedX : Float, p_speedY : Float, p_sun : Sun, ?p_health : Int = 1, ?p_damageValue = 1)
+	public function new(p_x : Float, p_y : Float, p_image : Image, p_speedX : Float, p_speedY : Float, p_sun : Sun, ?p_health : Int = 1, ?p_damageValue = 1, p_delay : Float)
 	{
 		super();
 
@@ -40,23 +42,31 @@ class Ship extends Entity
 		sun = p_sun;
 		health = p_health;
 		damageValue = p_damageValue;
+		timer = 0;
+		delay = p_delay;
 	}
 
 	public override function update() : Void
 	{
 		super.update();
 
+		timer += HXP.elapsed;
 		if (health <= 0) {
 			trace("Ship destroyed!");
 			HXP.world.remove(this);
 		}
-
-		timer += HXP.elapsed;
 		var collideObj : Entity = collideTypes(["planet", "missile"], x, y);
-		// HXP.console.log([x, y, width, height, Std.string(collideObj != null)]);
 		if (collideObj != null) {
 			trace("Ship hit!");
 			health--;
+		}
+		if (timer >= delay) {
+			trace("Enemy fire!");
+			timer = 0;
+			var target : Entity = HXP.world.nearestToEntity("planet", this, true);
+			if (target != null) {
+				HXP.world.add(new Bullet(this, Std.int(target.centerX), Std.int(target.centerY)));
+			}
 		}
 	}
 }

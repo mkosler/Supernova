@@ -70,8 +70,8 @@ class Cursor extends Entity
 			case "orbit":
 				if (occupied && name != "upgrade") {
 					var orbit : Orbit = cast(collideObj, Orbit);
-					var angle : Float = HXP.angle(x, y, orbit.x + orbit.width, orbit.y + (orbit.height / 2));
-					trace("New angle: " + angle);
+					var angle : Float = angle(x, y, HXP.halfWidth, HXP.halfHeight) * 180 / Math.PI;
+					HXP.console.log([x, y, HXP.halfWidth, HXP.halfHeight, angle]);
 					if (orbit.addPlanet(name, angle)) {
 						totalResources -= heldValue;
 						graphic = null;
@@ -113,5 +113,15 @@ class Cursor extends Entity
 	public function collect(p_value : Int) : Void
 	{
 		totalResources += p_value;
+	}
+
+	private function angle(p_x : Float, p_y : Float, p_baseX : Float, p_baseY : Float) : Float
+	{
+		var a : Float = Math.atan((p_y - p_baseY) / (p_x - p_baseX));
+		if (p_x <= p_baseX) {
+			return Math.PI + a;
+		} else {
+			return ((2 *Math.PI) + a) % (2 * Math.PI);
+		}
 	}
 }

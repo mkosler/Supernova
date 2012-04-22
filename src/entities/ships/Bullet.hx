@@ -10,10 +10,13 @@ import entities.ships.Ship;
 
 class Bullet extends Entity 
 {
-	private var targetX : Float;
-	private var targetY : Float;
+	// private var targetX : Float;
+	// private var targetY : Float;
+	private var speedX : Float;
+	private var speedY : Float;
 	public var damageValue : Int;
-	static public inline var speed : Float = 5.0;
+	// static public inline var speed : Float = 5.0;
+	private var speed : Float;
 
 	public function new(p_ship : Ship, p_targetX : Int, p_targetY : Int)
 	{
@@ -21,14 +24,20 @@ class Bullet extends Entity
 
 		setHitbox(3, 3);
 		type = "bullet";
+		var a : Float = angle(p_targetX, p_targetY, x, y);
+		speedX = 5 * Math.cos(a);
+		speedY = 5 * Math.sin(a);
 		damageValue = p_ship.damageValue;
+
+		trace("Bullet target...");
+		HXP.console.log([x, y, p_targetX, p_targetY]);
 	}
 
 	public override function update() : Void
 	{
 		super.update();
 
-		moveTowards(targetX, targetY, speed, "planet", true);
+		moveBy(speedX, speedY, "planet");
 	}
 
 	public override function moveCollideX(e : Entity) : Void
@@ -39,5 +48,15 @@ class Bullet extends Entity
 	public override function moveCollideY(e : Entity) : Void
 	{
 		HXP.world.remove(this);
+	}
+
+	private function angle(p_x : Float, p_y : Float, p_baseX : Float, p_baseY : Float) : Float
+	{
+		var a : Float = Math.atan((p_y - p_baseY) / (p_x - p_baseX));
+		if (p_x <= p_baseX) {
+			return Math.PI + a;
+		} else {
+			return ((2 *Math.PI) + a) % (2 * Math.PI);
+		}
 	}
 }
