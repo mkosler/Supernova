@@ -96,6 +96,8 @@ class GameWorld extends World
 	{
 		super.update();
 
+		solarSystem.update();
+
 		var label : Text = cast(resourceText.graphic, Text);
 		label.text = "Food " + cursor.totalResources;
 

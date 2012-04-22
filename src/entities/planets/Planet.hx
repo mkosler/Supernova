@@ -10,13 +10,15 @@ import com.haxepunk.utils.Input;
 // Game imports
 import entities.planets.Sun;
 import entities.planets.Orbit;
+import entities.ships.Ship;
+import entities.ships.Bullet;
 
 class Planet extends Entity 
 {
 	private var isHeld : Bool;
 
 	public var health : Int;
-	static public inline var rotSpeed : Float = 2.0;
+	private var rotSpeed : Float;
 	public var level : Int;
 	private var sun : Sun;
 	public var radius : Float;
@@ -24,7 +26,7 @@ class Planet extends Entity
 	public var power : Int;
 
 	// public function new(p_x : Float, p_y : Float, p_health : Int, p_rotSpeed : Float, p_sun : Sun, p_currentOrbit : Orbit, p_angle : Int)
-	public function new(p_angle : Float, p_radius : Float, p_health : Int, p_sun : Sun)
+	public function new(p_angle : Float, p_radius : Float, p_health : Int, p_rotSpeed : Float, p_sun : Sun)
 	{
 		super();
 
@@ -37,6 +39,7 @@ class Planet extends Entity
 		radius = p_radius;
 		sun = p_sun;
 		power = 0;
+		rotSpeed = p_rotSpeed;
 	}
 
 	public override function update() : Void 
@@ -51,9 +54,15 @@ class Planet extends Entity
 		angle += rotSpeed;
 		angle %= 360;
 
-		var collideObj :Entity = collideTypes(["bullet", "ship"], x, y);
+		// var collideObj : Entity = collide("bullet", x, y);
+		var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {
-			// Do stuff
+			if (collideObj.type == "ship") {
+				health--;
+			} else if (collideObj.type == "bullet") {
+				var bullet : Bullet = cast(collideObj, Bullet);
+				health -= bullet.damageValue;
+			}
 		}
 	}
 }

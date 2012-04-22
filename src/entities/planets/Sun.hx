@@ -7,6 +7,8 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 
 // Game imports
+import entities.ships.Bullet;
+import entities.ships.Ship;
 
 class Sun extends Entity 
 {
@@ -26,7 +28,7 @@ class Sun extends Entity
 		x = HXP.halfWidth - (image.width / 2);
 		y = HXP.halfHeight - (image.height / 2);
 		mask = new Circle(32, 32, 32);
-		type = "sun";
+		type = "planet";
 		health = p_health;
 	}
 
@@ -36,7 +38,14 @@ class Sun extends Entity
 
 		var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {
-			// Do stuff
+			if (collideObj.type == "ship") {
+				trace("Sun has been hit!");
+				var ship : Ship = cast(collideObj, Ship);
+				health -= ship.damageValue;
+			} else if (collideObj.type == "bullet") {
+				var bullet : Bullet = cast(collideObj, Bullet);
+				health -= bullet.damageValue;
+			}
 		}
 	}
 }

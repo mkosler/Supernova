@@ -8,6 +8,5 @@
 -swf9 bin/flash/bin/MyApplication.swf
 -swf-header 640:480:30:ffffff
 -cp bin/flash/haxe
--D fdb
 --no-inline
 -debug

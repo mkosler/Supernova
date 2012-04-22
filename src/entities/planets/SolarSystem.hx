@@ -10,11 +10,17 @@ import com.haxepunk.HXP;
 import entities.planets.Sun;
 import entities.planets.Orbit;
 import entities.HealthBar;
+import entities.ships.SimpleShip;
 
 class SolarSystem 
 {
 	// Hacking my way to SUCCESS! Add all entities to this array, then simply add them inside GameWorld
 	public var entities : Array<Entity>;
+
+	private var timer : Float;
+	public var wave : Int;
+	private var delay : Float;
+	private var countTilNextWave : Int;
 
 	// Sun stuff
 	public var sun : Sun;
@@ -26,6 +32,10 @@ class SolarSystem
 	public function new(p_health : Int, p_numOrbits : Int)
 	{
 		entities = new Array<Entity>();
+		timer = 0;
+		wave = 0;
+		delay = 2.0;
+		countTilNextWave = 10 * (wave + 1);
 
 		sun = new Sun(p_health);
 		addPlanetoid(sun);
@@ -36,9 +46,6 @@ class SolarSystem
 			addOrbit(new Orbit(sun, p_numOrbits, p_numOrbits * 2));
 			p_numOrbits--;
 		}
-		// for (i in 0...p_numOrbits) {
-		// 	addOrbit(new Orbit(sun, i + 1, (i + 1) * 2));
-		// }
 	}
 
 	private function addPlanetoid(e : Entity) : Void
@@ -50,5 +57,17 @@ class SolarSystem
 	private function addOrbit(o : Orbit) : Void 
 	{
 		entities.push(o);
+	}
+
+	public function update() : Void 
+	{
+		timer += HXP.elapsed;
+		// HXP.console.log([timer]);
+		if (timer >= delay * (5 - wave)) {
+			trace("Incoming enemy!");
+			timer = 0;
+			delay -= 0.02;
+			HXP.world.add(new SimpleShip(HXP.width * HXP.random, HXP.height * HXP.random, 4, 4, sun));
+		}
 	}
 }

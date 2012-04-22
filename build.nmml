@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-	<app title="HaxePunk" main="Main"
-		package="com.example.app" version="1.0.0" company="HaxePunk" />
+	<app title="Supernova" main="Main"
+		package="com.example.app" version="1.0.0" company="MarekkPie" />
 	<window width="640" height="480" fps="30"
 		orientation="portrait" resizable="true" />
 

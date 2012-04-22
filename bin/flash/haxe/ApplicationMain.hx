@@ -55,9 +55,19 @@ class ApplicationMain {
             return Assets.getBitmapData ("gfx/plate.png");
          
 		
+		if (inName=="gfx/missile.png")
+			 
+            return Assets.getBitmapData ("gfx/missile.png");
+         
+		
 		if (inName=="gfx/healthbar.png")
 			 
             return Assets.getBitmapData ("gfx/healthbar.png");
+         
+		
+		if (inName=="gfx/bullet.png")
+			 
+            return Assets.getBitmapData ("gfx/bullet.png");
          
 		
 		if (inName=="gfx/debug/console_pause.png")
@@ -88,6 +98,11 @@ class ApplicationMain {
 		if (inName=="gfx/debug/console_debug.png")
 			 
             return Assets.getBitmapData ("gfx/debug/console_debug.png");
+         
+		
+		if (inName=="gfx/mothership.png")
+			 
+            return Assets.getBitmapData ("gfx/mothership.png");
          
 		
 		if (inName=="gfx/background.png")
@@ -123,6 +138,11 @@ class ApplicationMain {
 		if (inName=="gfx/planets/defend.png")
 			 
             return Assets.getBitmapData ("gfx/planets/defend.png");
+         
+		
+		if (inName=="gfx/simpleship.png")
+			 
+            return Assets.getBitmapData ("gfx/simpleship.png");
          
 		
 		if (inName=="gfx/resource.png")
@@ -166,7 +186,15 @@ class ApplicationMain {
 	
 
 	
+		class NME_gfx_missile_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
 		class NME_gfx_healthbar_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_bullet_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	
@@ -191,6 +219,10 @@ class ApplicationMain {
 
 	
 		class NME_gfx_debug_console_debug_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_mothership_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	
@@ -219,6 +251,10 @@ class ApplicationMain {
 
 	
 		class NME_gfx_planets_defend_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_simpleship_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	

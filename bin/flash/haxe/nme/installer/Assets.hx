@@ -30,8 +30,12 @@ class Assets {
 			
 			resourceClasses.set ("gfx/plate.png", NME_gfx_plate_png);
 			resourceTypes.set ("gfx/plate.png", "image");
+			resourceClasses.set ("gfx/missile.png", NME_gfx_missile_png);
+			resourceTypes.set ("gfx/missile.png", "image");
 			resourceClasses.set ("gfx/healthbar.png", NME_gfx_healthbar_png);
 			resourceTypes.set ("gfx/healthbar.png", "image");
+			resourceClasses.set ("gfx/bullet.png", NME_gfx_bullet_png);
+			resourceTypes.set ("gfx/bullet.png", "image");
 			resourceClasses.set ("gfx/debug/console_pause.png", NME_gfx_debug_console_pause_png);
 			resourceTypes.set ("gfx/debug/console_pause.png", "image");
 			resourceClasses.set ("gfx/debug/console_play.png", NME_gfx_debug_console_play_png);
@@ -44,6 +48,8 @@ class Assets {
 			resourceTypes.set ("gfx/debug/console_step.png", "image");
 			resourceClasses.set ("gfx/debug/console_debug.png", NME_gfx_debug_console_debug_png);
 			resourceTypes.set ("gfx/debug/console_debug.png", "image");
+			resourceClasses.set ("gfx/mothership.png", NME_gfx_mothership_png);
+			resourceTypes.set ("gfx/mothership.png", "image");
 			resourceClasses.set ("gfx/background.png", NME_gfx_background_png);
 			resourceTypes.set ("gfx/background.png", "image");
 			resourceClasses.set ("gfx/planets/attack.png", NME_gfx_planets_attack_png);
@@ -58,6 +64,8 @@ class Assets {
 			resourceTypes.set ("gfx/planets/food.png", "image");
 			resourceClasses.set ("gfx/planets/defend.png", NME_gfx_planets_defend_png);
 			resourceTypes.set ("gfx/planets/defend.png", "image");
+			resourceClasses.set ("gfx/simpleship.png", NME_gfx_simpleship_png);
+			resourceTypes.set ("gfx/simpleship.png", "image");
 			resourceClasses.set ("gfx/resource.png", NME_gfx_resource_png);
 			resourceTypes.set ("gfx/resource.png", "image");
 			resourceClasses.set ("gfx/upgrade.png", NME_gfx_upgrade_png);

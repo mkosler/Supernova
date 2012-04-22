@@ -19,7 +19,7 @@ class FoodPlanet extends Planet
 
 	public function new(p_angle : Float, p_radius : Float, p_sun : Sun)
 	{
-		super(p_angle, p_radius, 20, p_sun);
+		super(p_angle, p_radius, 20, 1.5, p_sun);
 
 		graphic = new Image("gfx/planets/food.png");
 		timer = 0;
@@ -32,9 +32,7 @@ class FoodPlanet extends Planet
 		if (paused) return;
 
 		timer += HXP.elapsed;
-		// trace("Timer: " + timer);
 		if (timer > delay * (3 - power)) {
-			trace("Reset and launch food");
 			timer = 0;
 			HXP.world.add(new Food(this, harvestAmount * (power + 1)));
 		}
