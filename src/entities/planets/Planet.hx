@@ -46,7 +46,6 @@ class Planet extends Entity
 		y = sun.centerY + (radius * Math.sin(radians));
 		angle += rotSpeed;
 		angle %= 360;
-		HXP.console.log([x, y, sun.centerX, sun.centerY, radius, radians, rotSpeed]);
 
 		var collideObj :Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {

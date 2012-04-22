@@ -125,6 +125,16 @@ class ApplicationMain {
             return Assets.getBitmapData ("gfx/planets/defend.png");
          
 		
+		if (inName=="gfx/resource.png")
+			 
+            return Assets.getBitmapData ("gfx/resource.png");
+         
+		
+		if (inName=="gfx/upgrade.png")
+			 
+            return Assets.getBitmapData ("gfx/upgrade.png");
+         
+		
 		if (inName=="font/04B_03__.ttf")
 			 
 			 return Assets.getFont ("font/04B_03__.ttf");
@@ -209,6 +219,14 @@ class ApplicationMain {
 
 	
 		class NME_gfx_planets_defend_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_resource_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_upgrade_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	

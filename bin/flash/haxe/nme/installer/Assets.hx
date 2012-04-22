@@ -58,6 +58,10 @@ class Assets {
 			resourceTypes.set ("gfx/planets/food.png", "image");
 			resourceClasses.set ("gfx/planets/defend.png", NME_gfx_planets_defend_png);
 			resourceTypes.set ("gfx/planets/defend.png", "image");
+			resourceClasses.set ("gfx/resource.png", NME_gfx_resource_png);
+			resourceTypes.set ("gfx/resource.png", "image");
+			resourceClasses.set ("gfx/upgrade.png", NME_gfx_upgrade_png);
+			resourceTypes.set ("gfx/upgrade.png", "image");
 			resourceClasses.set ("font/04B_03__.ttf", NME_font_04b_03___ttf);
 			resourceTypes.set ("font/04B_03__.ttf", "font");
 			

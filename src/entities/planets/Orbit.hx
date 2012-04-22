@@ -69,6 +69,6 @@ class Orbit extends Entity
 		super.render();
 
 		Draw.resetTarget();
-		Draw.circle(Std.int(sun.centerX), Std.int(sun.centerY), Std.int(radius), 0xFFFFFF);
+		Draw.circle(Std.int(sun.centerX), Std.int(sun.centerY), Std.int(radius), 0xEEEEEE);
 	}
 }

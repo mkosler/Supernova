@@ -20,6 +20,8 @@ class Cursor extends Entity
 	private var defendPlanetImage : Image;
 	private var occupied : Bool;
 	private var name : String;
+	private var heldValue : Int;
+	public var totalResources : Int;
 	static public inline var size : Int = 16;
 
 	public function new()
@@ -33,7 +35,10 @@ class Cursor extends Entity
 		y = Input.mouseY;
 		occupied = false;
 		name = null;
+		type = "cursor";
 		setHitbox(size, size);
+		totalResources = 0;
+		heldValue = 0;
 	}
 
 	public override function update() : Void 
@@ -47,8 +52,9 @@ class Cursor extends Entity
 		if (collideObj != null && Input.mousePressed) {
 			switch (collideObj.type) {
 			case "button":
-				if (!occupied) {
-					var button : PlanetButton = cast(collideObj, PlanetButton);
+				var button : PlanetButton = cast(collideObj, PlanetButton);
+				if (button.cost <= totalResources) {
+					heldValue = button.cost;
 					name = button.name;
 					graphic = pullGraphic(name);
 					occupied = true;
@@ -56,9 +62,10 @@ class Cursor extends Entity
 			case "orbit":
 				if (occupied) {
 					var orbit : Orbit = cast(collideObj, Orbit);
-					var angle : Float = HXP.angle(x, y, orbit.x, orbit.y);
+					var angle : Float = HXP.angle(x, y, orbit.x + orbit.width, orbit.y + (orbit.height / 2));
 					trace("New angle: " + angle);
 					if (orbit.addPlanet(name, angle)) {
+						totalResources -= heldValue;
 						graphic = null;
 						name = null;
 						occupied = false;
@@ -80,5 +87,10 @@ class Cursor extends Entity
 		default:
 			return null;
 		}
+	}
+
+	public function collect(p_value : Int) : Void
+	{
+		totalResources += p_value;
 	}
 }
