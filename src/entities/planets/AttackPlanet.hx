@@ -19,7 +19,7 @@ class AttackPlanet extends Planet
 
 	public function new(p_angle : Float, p_radius : Float, p_sun : Sun)
 	{
-		super(p_angle, p_radius, 10, 0.75, p_sun);
+		super(p_angle, p_radius, 10, 0.4, p_sun);
 
 		graphic = new Image("gfx/planets/attack.png");
 		timer = 0;
@@ -50,6 +50,7 @@ private class Missile extends Entity
 	static public inline var speed : Float = 4.5;
 	private var target : Entity;
 	private var sun : Sun;
+	private var waitCount : Int;
 
 	public function new(p_x : Float, p_y : Float, p_target : Entity, p_sun : Sun)
 	{
@@ -59,6 +60,7 @@ private class Missile extends Entity
 		type = "missile";
 		target = p_target;
 		sun = p_sun;
+		waitCount = 0;
 	}
 
 	public override function update() : Void
@@ -66,6 +68,9 @@ private class Missile extends Entity
 		super.update();
 
 		moveTowards(target.x, target.y, speed, "ship");
+		if (++waitCount > 100) {
+			HXP.world.remove(this);
+		}
 	}
 
 	public override function moveCollideX(e : Entity) : Void 

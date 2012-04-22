@@ -36,6 +36,7 @@ class GameWorld extends World
 	private var foodPlanetText : Entity;
 	private var attackPlanetText : Entity;
 	private var defendPlanetText : Entity;
+	private var waveText : Text;
 	private var paused : Bool;
 
 	public function new()
@@ -80,10 +81,7 @@ class GameWorld extends World
 
 		cursor = new Cursor();
 		add(cursor);
-		resourceText = addGraphic(new Text("Food " + cursor.totalResources));
-		resourceText.x = plateRight.x + 10;
-		resourceText.y = 100;
-		resourceText.layer = 0;
+		resourceText = addGraphic(new Text("Food " + cursor.totalResources), 0, plateRight.x + 10, 100);
 
 		// slightly less ugly
 		var foodPlanetImage : Image = new Image("gfx/planets/food.png");
@@ -103,6 +101,8 @@ class GameWorld extends World
 		addGraphic(defendPlanetImage, 0, resourceText.x, 400);
 
 		defendPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 450);
+
+		addGraphic((waveText = new Text("WAVE: " + Std.string(solarSystem.wave + 1))), 0, resourceText.x, 50);
 		// /end ugly
 
 		Input.define("Pause", [Key.P, Key.SPACE]);
@@ -138,6 +138,8 @@ class GameWorld extends World
 		label = cast(defendPlanetText.graphic, Text);
 		label.text = Std.string(defendPlanets.length);
 
+		waveText.text = "WAVE: " + Std.string(solarSystem.wave + 1);
+
 		if (Input.pressed("Pause")) {
 			paused = !paused;
 			trace("Pressed pause: " + Std.string(paused));
@@ -156,5 +158,22 @@ class GameWorld extends World
 		}
 
 		return super.add(e);
+	}
+
+	public override function remove(e : Entity) 
+	{
+		if (e.type == "planet") {
+			var healthBars : Array<Entity> = new Array<Entity>();
+			getType("health", healthBars);
+			for (item in healthBars) {
+				var hp : HealthBar = cast(item, HealthBar);
+				if (hp.attachedSun == e || hp.attachedPlanet == e) {
+					remove(hp);
+					break;
+				}
+			}
+		}
+
+		return super.remove(e);	
 	}
 }

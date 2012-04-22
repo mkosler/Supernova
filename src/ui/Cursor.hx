@@ -11,6 +11,7 @@ import com.haxepunk.HXP;
 import ui.PlanetButton;
 import entities.planets.Orbit;
 import entities.planets.Planet;
+import entities.planets.Sun;
 
 class Cursor extends Entity
 {
@@ -56,10 +57,33 @@ class Cursor extends Entity
 			occupied = false;
 		}
 
-		var collideObj : Entity = collideTypes(["button", "orbit", "planet"], x, y);
+		// Hacking my way to SUCCESS!
+		var collideObj : Entity = collide("planet", x, y);
+		if (collideObj != null && Input.mousePressed && occupied && name == "upgrade") {
+			if (Std.is(collideObj, Sun)) {
+				var sun : Sun = cast(collideObj, Sun);
+				if (sun.upgrade()) {
+					totalResources -= heldValue;
+					graphic = null;
+					name = null;
+					occupied = false;
+				}
+			} else {
+				var planet : Planet = cast(collideObj, Planet);
+				if (planet.upgrade()) {
+					totalResources -= heldValue;
+					graphic = null;
+					name = null;
+					occupied = false;
+				}
+			}
+		}
+
+		collideObj = collideTypes(["button", "orbit"], x, y);
 		if (collideObj != null && Input.mousePressed) {
 			switch (collideObj.type) {
 			case "button":
+				trace("Clicking on button");
 				var button : PlanetButton = cast(collideObj, PlanetButton);
 				if (button.cost <= totalResources) {
 					heldValue = button.cost;
@@ -67,23 +91,25 @@ class Cursor extends Entity
 					graphic = pullGraphic(name);
 					occupied = true;
 				}
+			// case "planet":
+			// 	trace("Clicking on planet");
+			// 	if (occupied && name == "upgrade") {
+			// 		var planet : Planet = cast(collideObj, Planet);
+			// 		if (planet.power < 3) {
+			// 			planet.power++;
+			// 			totalResources -= heldValue;
+			// 			graphic = null;
+			// 			name = null;
+			// 			occupied = false;
+			// 		}
+			// 	}
 			case "orbit":
+				trace("Clicking on orbit");
 				if (occupied && name != "upgrade") {
 					var orbit : Orbit = cast(collideObj, Orbit);
 					var angle : Float = angle(x, y, HXP.halfWidth, HXP.halfHeight) * 180 / Math.PI;
 					HXP.console.log([x, y, HXP.halfWidth, HXP.halfHeight, angle]);
 					if (orbit.addPlanet(name, angle)) {
-						totalResources -= heldValue;
-						graphic = null;
-						name = null;
-						occupied = false;
-					}
-				}
-			case "planet":
-				if (occupied && name == "upgrade") {
-					var planet : Planet = cast(collideObj, Planet);
-					if (planet.power < 3) {
-						planet.power++;
 						totalResources -= heldValue;
 						graphic = null;
 						name = null;

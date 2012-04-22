@@ -14,6 +14,7 @@ class Sun extends Entity
 {
 	public var gravity : Float;
 	public var health : Int;
+	private var maxHealth : Int;
 
 	// Health bar stuff
 	private var health_image : Image;
@@ -30,6 +31,7 @@ class Sun extends Entity
 		mask = new Circle(32, 32, 32);
 		type = "planet";
 		health = p_health;
+		maxHealth = p_health;
 	}
 
 	public override function update() : Void 
@@ -47,5 +49,14 @@ class Sun extends Entity
 				health -= bullet.damageValue;
 			}
 		}
+	}
+
+	public function upgrade() : Bool
+	{
+		if (health < maxHealth) {
+			health += 5;
+			return true;
+		}
+		return false;
 	}
 }

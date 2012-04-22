@@ -18,6 +18,7 @@ class Planet extends Entity
 	private var isHeld : Bool;
 
 	public var health : Int;
+	private var maxHealth : Int;
 	private var rotSpeed : Float;
 	public var level : Int;
 	private var sun : Sun;
@@ -34,6 +35,7 @@ class Planet extends Entity
 		mask = new Circle(8, 8, 8);
 		type = "planet";
 		health = p_health;
+		maxHealth = p_health;
 		level = 1;
 		angle = p_angle;
 		radius = p_radius;
@@ -68,5 +70,15 @@ class Planet extends Entity
 				health -= bullet.damageValue;
 			}
 		}
+	}
+
+	public function upgrade() : Bool 
+	{
+		if (power < 3 || health < maxHealth) {
+			power++;
+			health = maxHealth;
+			return true;
+		}
+		return false;
 	}
 }

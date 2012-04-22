@@ -28,7 +28,7 @@ class MotherShip extends Ship
 		var targetY : Float = sun.centerY;
 		var closeOrbit : Orbit = cast(HXP.world.nearestToEntity("orbit", this, true), Orbit);
 		if (closeOrbit.numPlanetsHeld > 0) {
-			if (distanceToPoint(sun.centerX, sun.centerY) < closeOrbit.radius + 30) {
+			if (distanceToPoint(sun.centerX, sun.centerY) < closeOrbit.radius + 40) {
 				isAdvancing = false;
 			}
 		}

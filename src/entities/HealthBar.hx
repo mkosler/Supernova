@@ -11,8 +11,8 @@ import entities.planets.Sun;
 class HealthBar extends Entity 
 {
 	// Ugly, hack way to get sun and planets
-	private var attachedPlanet : Planet;
-	private var attachedSun : Sun;
+	public var attachedPlanet : Planet;
+	public var attachedSun : Sun;
 	private var health : Int;
 
 	public function new(p_entity : Entity)
@@ -20,6 +20,7 @@ class HealthBar extends Entity
 		super(p_entity.x - 5, p_entity.y - 5);
 
 		health = 0;
+		type = "health";
 
 		// I feel so dirty
 		if (Std.is(p_entity, Sun)) {

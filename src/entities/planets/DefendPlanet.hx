@@ -9,15 +9,16 @@ import com.haxepunk.Entity;
 import entities.planets.Planet;
 import entities.planets.Sun;
 import entities.planets.Orbit;
+import entities.ships.SimpleShip;
 
 class DefendPlanet extends Planet 
 {
 	static public inline var gravityLength : Float = 25;
-	static public inline var pullPercentage : Float = 0.15;
+	static public inline var pullPercentage : Float = 0.20;
 
 	public function new(p_angle : Float, p_radius : Float, p_sun : Sun)
 	{
-		super(p_angle, p_radius, 40, 1.85, p_sun);
+		super(p_angle, p_radius, 40, 0.9, p_sun);
 
 		graphic = new Image("gfx/planets/defend.png");
 	}
@@ -29,7 +30,7 @@ class DefendPlanet extends Planet
 		if (paused) return;
 
 		var collideObj : Entity = HXP.world.nearestToEntity("ship", this, true);
-		if (collideObj != null && distanceFrom(collideObj) < gravityLength * (3 - power)) {
+		if (collideObj != null && Std.is(collideObj, SimpleShip) && distanceFrom(collideObj) < gravityLength * (3 - power)) {
 			var dX : Float = (collideObj.x - x) * (power + 1) * pullPercentage;
 			var dY : Float = (collideObj.y - y) * (power + 1) * pullPercentage;
 			collideObj.x -= dX;

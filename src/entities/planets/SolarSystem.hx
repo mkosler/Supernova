@@ -21,7 +21,9 @@ class SolarSystem
 	private var timer : Float;
 	public var wave : Int;
 	private var delay : Float;
+	static public inline var maxDelay : Float = 2.0;
 	private var countTilNextWave : Int;
+	private var startCount : Int;
 
 	// Sun stuff
 	public var sun : Sun;
@@ -33,50 +35,38 @@ class SolarSystem
 		entities = new Array<Entity>();
 		timer = 0;
 		wave = 0;
-		delay = 2.0;
+		delay = maxDelay;
 		countTilNextWave = 10 * (wave + 1);
+		startCount = countTilNextWave;
 
 		sun = new Sun(p_health);
-		health = p_health;
-		addPlanetoid(sun);
-
-		// orbits = new Array<Orbit>();
-
+		entities.push(sun);
+		
 		while (p_numOrbits > 0) {
-			addOrbit(new Orbit(sun, p_numOrbits, p_numOrbits * 2));
+			entities.push(new Orbit(sun, p_numOrbits, p_numOrbits * 2));
 			p_numOrbits--;
 		}
-	}
-
-	private function addPlanetoid(e : Entity) : Void
-	{
-		entities.push(e);
-		entities.push((healthBar = new HealthBar(e)));
-	}
-
-	private function addOrbit(o : Orbit) : Void 
-	{
-		entities.push(o);
 	}
 
 	public function update() : Void 
 	{
 		timer += HXP.elapsed;
-
-		// MORE UGLY...JUST WORK DAMN IT!
-		// healthBar.applyDamage(health - sun.health);
-		// health = sun.health;
-
+		if (countTilNextWave <= 0) {
+			countTilNextWave = 10 * (++wave + 1);
+			startCount = countTilNextWave;
+			delay = maxDelay;
+		}
 		if (timer >= delay * (5 - wave)) {
 			trace("Incoming enemy!");
 			timer = 0;
 			delay = Math.max(0.4, delay - 0.1);
-			if (HXP.random < 0.05) {
+			if (HXP.random < 0.15 && (countTilNextWave / startCount) < 0.75) {
 				HXP.world.add(new MotherShip(this));
 			} else {
 				HXP.world.add(new SimpleShip(sun));
 			}
 			trace("New delay: " + delay);
+			countTilNextWave--;
 		}
 	}
 }
