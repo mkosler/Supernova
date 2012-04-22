@@ -15,7 +15,6 @@ class FoodPlanet extends Planet
 {
 	static public inline var delay : Float = 2.5;
 	static public inline var harvestAmount : Int = 5;
-	private var power : Int;
 	private var timer : Float;
 
 	public function new(p_angle : Float, p_radius : Float, p_sun : Sun)
@@ -23,13 +22,14 @@ class FoodPlanet extends Planet
 		super(p_angle, p_radius, 20, p_sun);
 
 		graphic = new Image("gfx/planets/food.png");
-		power = 0;
 		timer = 0;
 	}
 
 	public override function update() : Void
 	{
 		super.update();
+
+		if (paused) return;
 
 		timer += HXP.elapsed;
 		// trace("Timer: " + timer);
@@ -59,6 +59,7 @@ private class Food extends Entity
 		y = p_planet.y;
 		image = new Image("gfx/resource.png");
 		graphic = image;
+		setHitbox(image.width, image.height);
 		value = p_value;
 		var sign : Int;
 		if (HXP.random < 0.5) {
@@ -76,9 +77,9 @@ private class Food extends Entity
 		super.update();
 
 		moveBy(speedX, speedY, "cursor");
-		if (!collideRect(x, y, 90, 0, HXP.width - 90, HXP.height)) {
-			HXP.world.remove(this);
-		}
+		// if (!collideRect(x, y, 90, 0, HXP.width - 90, HXP.height)) {
+		// 	HXP.world.remove(this);
+		// }
 	}
 
 	public override function moveCollideX(e : Entity) : Void

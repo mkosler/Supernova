@@ -16,4 +16,11 @@ class DefendPlanet extends Planet
 
 		graphic = new Image("gfx/planets/defend.png");
 	}
+
+	public override function update() : Void 
+	{
+		super.update();
+
+		if (paused) return;
+	}
 }

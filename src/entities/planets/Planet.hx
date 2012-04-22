@@ -21,6 +21,7 @@ class Planet extends Entity
 	private var sun : Sun;
 	public var radius : Float;
 	private var angle : Float;
+	public var power : Int;
 
 	// public function new(p_x : Float, p_y : Float, p_health : Int, p_rotSpeed : Float, p_sun : Sun, p_currentOrbit : Orbit, p_angle : Int)
 	public function new(p_angle : Float, p_radius : Float, p_health : Int, p_sun : Sun)
@@ -35,11 +36,14 @@ class Planet extends Entity
 		angle = p_angle;
 		radius = p_radius;
 		sun = p_sun;
+		power = 0;
 	}
 
 	public override function update() : Void 
 	{
 		super.update();
+
+		if (paused) return;
 
 		var radians : Float = angle * (Math.PI / 180);
 		x = sun.centerX + (radius * Math.cos(radians));

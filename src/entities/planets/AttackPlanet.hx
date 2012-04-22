@@ -16,4 +16,11 @@ class AttackPlanet extends Planet
 
 		graphic = new Image("gfx/planets/attack.png");
 	}
+
+	public override function update() : Void 
+	{
+		super.update();
+
+		if (paused) return;
+	}
 }

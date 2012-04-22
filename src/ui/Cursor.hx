@@ -3,21 +3,21 @@ package ui;
 // Library imports
 import com.haxepunk.Entity;
 import com.haxepunk.utils.Input;
+import com.haxepunk.utils.Key;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.HXP;
 
 // Game imports
 import ui.PlanetButton;
 import entities.planets.Orbit;
+import entities.planets.Planet;
 
 class Cursor extends Entity
 {
-	// static public inline var foodPlanetImage : Image = new Image("gfx/planets/food.png");
-	// static public inline var attackPlanetImage : Image = new Image("gfx/planets/attack.png");
-	// static public inline var defendPlanetImage : Image = new Image("gfx/planets/defend.png");
 	private var foodPlanetImage : Image;
 	private var attackPlanetImage : Image;
 	private var defendPlanetImage : Image;
+	private var upgradeImage : Image;
 	private var occupied : Bool;
 	private var name : String;
 	private var heldValue : Int;
@@ -31,14 +31,16 @@ class Cursor extends Entity
 		foodPlanetImage = new Image("gfx/planets/food.png");
 		attackPlanetImage = new Image("gfx/planets/attack.png");
 		defendPlanetImage = new Image("gfx/planets/defend.png");
+		upgradeImage = new Image("gfx/upgrade.png");
 		x = Input.mouseX;
 		y = Input.mouseY;
 		occupied = false;
 		name = null;
 		type = "cursor";
 		setHitbox(size, size);
-		totalResources = 0;
+		totalResources = 40;
 		heldValue = 0;
+		layer = 0;
 	}
 
 	public override function update() : Void 
@@ -48,7 +50,13 @@ class Cursor extends Entity
 		x = Input.mouseX;
 		y = Input.mouseY;
 
-		var collideObj : Entity = collideTypes(["button", "orbit"], x, y);
+		if (Input.pressed(Key.ESCAPE)) {
+			graphic = null;
+			name = null;
+			occupied = false;
+		}
+
+		var collideObj : Entity = collideTypes(["button", "orbit", "planet"], x, y);
 		if (collideObj != null && Input.mousePressed) {
 			switch (collideObj.type) {
 			case "button":
@@ -60,11 +68,22 @@ class Cursor extends Entity
 					occupied = true;
 				}
 			case "orbit":
-				if (occupied) {
+				if (occupied && name != "upgrade") {
 					var orbit : Orbit = cast(collideObj, Orbit);
 					var angle : Float = HXP.angle(x, y, orbit.x + orbit.width, orbit.y + (orbit.height / 2));
 					trace("New angle: " + angle);
 					if (orbit.addPlanet(name, angle)) {
+						totalResources -= heldValue;
+						graphic = null;
+						name = null;
+						occupied = false;
+					}
+				}
+			case "planet":
+				if (occupied && name == "upgrade") {
+					var planet : Planet = cast(collideObj, Planet);
+					if (planet.power < 3) {
+						planet.power++;
 						totalResources -= heldValue;
 						graphic = null;
 						name = null;
@@ -84,6 +103,8 @@ class Cursor extends Entity
 			return attackPlanetImage;
 		case "defend":
 			return defendPlanetImage;
+		case "upgrade":
+			return upgradeImage;
 		default:
 			return null;
 		}
