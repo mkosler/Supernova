@@ -59,7 +59,7 @@ class SolarSystem
 		if (timer >= delay * (5 - wave)) {
 			trace("Incoming enemy!");
 			timer = 0;
-			delay = Math.max(0.4, delay - 0.1);
+			delay = Math.max(0, delay - 0.1);
 			if (HXP.random < 0.15 && (countTilNextWave / startCount) < 0.75) {
 				HXP.world.add(new MotherShip(this));
 			} else {

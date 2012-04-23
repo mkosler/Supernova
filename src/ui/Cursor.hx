@@ -24,6 +24,7 @@ class Cursor extends Entity
 	private var heldValue : Int;
 	public var totalResources : Int;
 	static public inline var size : Int = 16;
+	private var lastButton : PlanetButton;
 
 	public function new()
 	{
@@ -42,6 +43,7 @@ class Cursor extends Entity
 		totalResources = 40;
 		heldValue = 0;
 		layer = 0;
+		lastButton = null;
 	}
 
 	public override function update() : Void 
@@ -64,6 +66,7 @@ class Cursor extends Entity
 				var sun : Sun = cast(collideObj, Sun);
 				if (sun.upgrade()) {
 					totalResources -= heldValue;
+					lastButton.cost += 5;
 					graphic = null;
 					name = null;
 					occupied = false;
@@ -72,6 +75,7 @@ class Cursor extends Entity
 				var planet : Planet = cast(collideObj, Planet);
 				if (planet.upgrade()) {
 					totalResources -= heldValue;
+					lastButton.cost += 5;
 					graphic = null;
 					name = null;
 					occupied = false;
@@ -84,10 +88,10 @@ class Cursor extends Entity
 			switch (collideObj.type) {
 			case "button":
 				trace("Clicking on button");
-				var button : PlanetButton = cast(collideObj, PlanetButton);
-				if (button.cost <= totalResources) {
-					heldValue = button.cost;
-					name = button.name;
+				lastButton = cast(collideObj, PlanetButton);
+				if (lastButton.cost <= totalResources) {
+					heldValue = lastButton.cost;
+					name = lastButton.name;
 					graphic = pullGraphic(name);
 					occupied = true;
 				}
@@ -111,6 +115,7 @@ class Cursor extends Entity
 					HXP.console.log([x, y, HXP.halfWidth, HXP.halfHeight, angle]);
 					if (orbit.addPlanet(name, angle)) {
 						totalResources -= heldValue;
+						lastButton.cost += 5;
 						graphic = null;
 						name = null;
 						occupied = false;

@@ -25,17 +25,17 @@ class GameWorld extends World
 	public var solarSystem : SolarSystem;
 	public var cursor : Cursor;
 	private var foodButton : PlanetButton;
-	private var foodText : Entity;
+	private var foodText : Text;
 	private var attackButton : PlanetButton;
-	private var attackText : Entity;
+	private var attackText : Text;
 	private var defendButton : PlanetButton;
-	private var defendText : Entity;
+	private var defendText : Text;
 	private var upgradeButton : PlanetButton;
-	private var upgradeText : Entity;
-	private var resourceText : Entity;
-	private var foodPlanetText : Entity;
-	private var attackPlanetText : Entity;
-	private var defendPlanetText : Entity;
+	private var upgradeText : Text;
+	private var resourceText : Text;
+	private var foodPlanetText : Text;
+	private var attackPlanetText : Text;
+	private var defendPlanetText : Text;
 	private var waveText : Text;
 	private var paused : Bool;
 
@@ -68,41 +68,41 @@ class GameWorld extends World
 		// Ugliest thing I have ever done
 		var costString : String = "Cost: ";
 		foodButton = cast(add(new PlanetButton(25, 100, new Image("gfx/planets/food.png"), "food", 20, solarSystem.sun)), PlanetButton);
-		foodText = addGraphic(new Text("FOOD\n" + costString + foodButton.cost), 0, foodButton.x - 10, foodButton.y + foodButton.height + 10);
+		addGraphic(foodText = new Text("FOOD\n" + costString + foodButton.cost), 0, foodButton.x - 10, foodButton.y + foodButton.height + 10);
 
 		attackButton = cast(add(new PlanetButton(25, 200, new Image("gfx/planets/attack.png"), "attack", 20, solarSystem.sun)), PlanetButton);
-		attackText = addGraphic(new Text("ATT\n" + costString + attackButton.cost), 0, attackButton.x - 10, attackButton.y + attackButton.height + 10);
+		addGraphic(attackText = new Text("ATT\n" + costString + attackButton.cost), 0, attackButton.x - 10, attackButton.y + attackButton.height + 10);
 
 		defendButton = cast(add(new PlanetButton(25, 300, new Image("gfx/planets/defend.png"), "defend", 20, solarSystem.sun)), PlanetButton);
-		defendText = addGraphic(new Text("DEF\n" + costString + defendButton.cost), 0, defendButton.x - 10, defendButton.y + defendButton.height + 10);
+		addGraphic(defendText = new Text("DEF\n" + costString + defendButton.cost), 0, defendButton.x - 10, defendButton.y + defendButton.height + 10);
 
 		upgradeButton = cast(add(new PlanetButton(25, 400, new Image("gfx/upgrade.png"), "upgrade", 35, solarSystem.sun)), PlanetButton);
-		upgradeText = addGraphic(new Text("UP\n" + costString + upgradeButton.cost), 0, upgradeButton.x - 10, upgradeButton.y + upgradeButton.height + 10);
+		addGraphic(upgradeText = new Text("UP\n" + costString + upgradeButton.cost), 0, upgradeButton.x - 10, upgradeButton.y + upgradeButton.height + 10);
 
 		cursor = new Cursor();
 		add(cursor);
-		resourceText = addGraphic(new Text("Food " + cursor.totalResources), 0, plateRight.x + 10, 100);
+		addGraphic(resourceText = new Text("Food " + cursor.totalResources), 0, plateRight.x + 10, 100);
 
 		// slightly less ugly
 		var foodPlanetImage : Image = new Image("gfx/planets/food.png");
 		foodPlanetImage.scale = 3;
-		addGraphic(foodPlanetImage, 0, resourceText.x, 200);
+		addGraphic(foodPlanetImage, 0, plateRight.x + 10, 200);
 
-		foodPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 250);
+		addGraphic(foodPlanetText = new Text(" "), 0, plateRight.x + 10, 250);
 
 		var attackPlanetImage : Image = new Image("gfx/planets/attack.png");
 		attackPlanetImage.scale = 3;
-		addGraphic(attackPlanetImage, 0, resourceText.x, 300);
+		addGraphic(attackPlanetImage, 0, plateRight.x + 10, 300);
 
-		attackPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 350);
+		addGraphic(attackPlanetText = new Text(" "), 0, plateRight.x + 10, 350);
 
 		var defendPlanetImage : Image = new Image("gfx/planets/defend.png");
 		defendPlanetImage.scale = 3;
-		addGraphic(defendPlanetImage, 0, resourceText.x, 400);
+		addGraphic(defendPlanetImage, 0, plateRight.x + 10, 400);
 
-		defendPlanetText = addGraphic(new Text(" "), 0, resourceText.x, 450);
+		addGraphic(defendPlanetText = new Text(" "), 0, plateRight.x + 10, 450);
 
-		addGraphic((waveText = new Text("WAVE: " + Std.string(solarSystem.wave + 1))), 0, resourceText.x, 50);
+		addGraphic((waveText = new Text("WAVE: " + Std.string(solarSystem.wave + 1))), 0, plateRight.x + 10, 50);
 		// /end ugly
 
 		Input.define("Pause", [Key.P, Key.SPACE]);
@@ -119,25 +119,26 @@ class GameWorld extends World
 			HXP.world = new TutWorld();
 		}
 
-		var label : Text = cast(resourceText.graphic, Text);
-		label.text = "Food " + cursor.totalResources;
+		resourceText.text = "Food " + cursor.totalResources;
+		// var label : Text = cast(resourceText.graphic, Text);
+		// label.text = "Food " + cursor.totalResources;
 
 		// OH GOD ITS SO UGLY
 		var foodPlanets : Array<Entity> = new Array<Entity>();
 		getClass(FoodPlanet, foodPlanets);
-		label = cast(foodPlanetText.graphic, Text);
-		label.text = Std.string(foodPlanets.length);
+		foodPlanetText.text = Std.string(foodPlanets.length);
 
 		var attackPlanets : Array<Entity> = new Array<Entity>();
 		getClass(AttackPlanet, attackPlanets);
-		label = cast(attackPlanetText.graphic, Text);
-		label.text = Std.string(attackPlanets.length);		
+		attackPlanetText.text = Std.string(attackPlanets.length);		
 
 		var defendPlanets : Array<Entity> = new Array<Entity>();
 		getClass(DefendPlanet, defendPlanets);
-		label = cast(defendPlanetText.graphic, Text);
-		label.text = Std.string(defendPlanets.length);
+		defendPlanetText.text = Std.string(defendPlanets.length);
 
+		foodText.text = "FOOD\nCost: " + Std.string(foodButton.cost);
+		attackText.text = "ATT\nCost: " + Std.string(attackButton.cost);
+		defendText.text = "DEF\nCost: " + Std.string(defendButton.cost);
 		waveText.text = "WAVE: " + Std.string(solarSystem.wave + 1);
 
 		if (Input.pressed("Pause")) {
