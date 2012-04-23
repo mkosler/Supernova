@@ -3,7 +3,7 @@ package entities.planets;
 // Library imports
 import com.haxepunk.Entity;
 import com.haxepunk.masks.Circle;
-import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.TiledSpritemap;
 import com.haxepunk.HXP;
 
 // Game imports
@@ -12,22 +12,20 @@ import entities.ships.Ship;
 
 class Sun extends Entity 
 {
+	private var tiledSpritemap : TiledSpritemap;
 	public var gravity : Float;
 	public var health : Int;
 	private var maxHealth : Int;
-
-	// Health bar stuff
-	private var health_image : Image;
-	static public inline var damageColorFlip = 0x001111;
 
 	public function new(p_health : Int)
 	{
 		super();
 
-		var image : Image = new Image("gfx/planets/sun.png");
-		graphic = image;
-		x = HXP.halfWidth - (image.width / 2);
-		y = HXP.halfHeight - (image.height / 2);
+		tiledSpritemap = new TiledSpritemap("gfx/planets/sun.png", 64, 64);
+		tiledSpritemap.add("normal", [0, 1], 1);
+		graphic = tiledSpritemap;
+		x = HXP.halfWidth - 32;
+		y = HXP.halfHeight - 32;
 		mask = new Circle(32, 32, 32);
 		type = "planet";
 		health = p_health;
@@ -37,6 +35,8 @@ class Sun extends Entity
 	public override function update() : Void 
 	{
 		super.update();
+
+		tiledSpritemap.play("normal");
 
 		var collideObj : Entity = collideTypes(["bullet", "ship"], x, y);
 		if (collideObj != null) {

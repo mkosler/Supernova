@@ -25,8 +25,8 @@ class Main extends Engine
 
 	override public function init()
 	{
-		HXP.console.enable();
-		HXP.console.toggleKey = Key.TAB;
+		// HXP.console.enable();
+		// HXP.console.toggleKey = Key.TAB;
 
 		HXP.screen.color = kClearColor;
 		HXP.screen.scale = 1;

@@ -74,7 +74,7 @@ class Planet extends Entity
 
 	public function upgrade() : Bool 
 	{
-		if (power < 3 || health < maxHealth) {
+		if (power < 2 || health < maxHealth) {
 			power++;
 			health = maxHealth;
 			return true;

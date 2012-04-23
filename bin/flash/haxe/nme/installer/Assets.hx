@@ -32,6 +32,16 @@ class Assets {
 			resourceTypes.set ("gfx/plate.png", "image");
 			resourceClasses.set ("gfx/missile.png", NME_gfx_missile_png);
 			resourceTypes.set ("gfx/missile.png", "image");
+			resourceClasses.set ("gfx/buttons/play.png", NME_gfx_buttons_play_png);
+			resourceTypes.set ("gfx/buttons/play.png", "image");
+			resourceClasses.set ("gfx/buttons/next.png", NME_gfx_buttons_next_png);
+			resourceTypes.set ("gfx/buttons/next.png", "image");
+			resourceClasses.set ("gfx/buttons/prev.png", NME_gfx_buttons_prev_png);
+			resourceTypes.set ("gfx/buttons/prev.png", "image");
+			resourceClasses.set ("gfx/buttons/tutorial.png", NME_gfx_buttons_tutorial_png);
+			resourceTypes.set ("gfx/buttons/tutorial.png", "image");
+			resourceClasses.set ("gfx/buttons/return.png", NME_gfx_buttons_return_png);
+			resourceTypes.set ("gfx/buttons/return.png", "image");
 			resourceClasses.set ("gfx/healthbar.png", NME_gfx_healthbar_png);
 			resourceTypes.set ("gfx/healthbar.png", "image");
 			resourceClasses.set ("gfx/bullet.png", NME_gfx_bullet_png);

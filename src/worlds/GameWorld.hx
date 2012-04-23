@@ -116,7 +116,7 @@ class GameWorld extends World
 		solarSystem.update();
 
 		if (solarSystem.sun.health <= 0) {
-			// HXP.world = new DeadWorld();
+			HXP.world = new TutWorld();
 		}
 
 		var label : Text = cast(resourceText.graphic, Text);

@@ -4,17 +4,19 @@ package worlds;
 import com.haxepunk.World;
 import com.haxepunk.graphics.Backdrop;
 import com.haxepunk.graphics.Text;
-import com.haxepunk.utils.Input;
 import com.haxepunk.HXP;
 import com.haxepunk.Entity;
+import com.haxepunk.graphics.Image;
 
 // Game imports
 import worlds.GameWorld;
+import ui.Button;
 
 class TutWorld extends World 
 {
 	private var pages : Array<Entity>;
 	public var pageNum : Int;
+	private var buttons : Array<Button>;
 
 	public function new()
 	{
@@ -30,19 +32,16 @@ class TutWorld extends World
 
 		pageNum = 0;
 
-		add(new TextButton(HXP.width / 4, HXP.height - 75, new Text("PREV"), prevCallback));
-		add(new TextButton(HXP.width * 3 / 4, HXP.height - 75, new Text("NEXT"), nextCallback));
-	}
-
-	public override function begin() : Void
-	{
-
+		var buttonHeight : Int = HXP.height - 75;
+		add(new Button(104, buttonHeight, new Image("gfx/buttons/play.png"), playCallback));
+		add(new Button(104 + 128 + 104, buttonHeight, new Image("gfx/buttons/prev.png"), prevCallback));
+		add(new Button(104 + 128 + 104 + 128 + 104, buttonHeight, new Image("gfx/buttons/tutorial.png"), nextCallback));
 	}
 
 	public function nextCallback() : Void
 	{
 		trace("Inside nextCallback");
-		pageNum++;
+		pageNum = Std.int(Math.min(pageNum + 1, pages.length - 1));
 		makeVisible(pageNum);
 	}
 
@@ -50,6 +49,19 @@ class TutWorld extends World
 	{
 		trace("Inside prevCallback");
 		pageNum = Std.int(Math.max(pageNum - 1, 0));
+		makeVisible(pageNum);
+	}
+
+	public function playCallback() : Void 
+	{
+		trace("Inside playCallback");
+		HXP.world = new GameWorld();
+	}
+
+	public function returnCallback() : Void
+	{
+		trace("Inside returnCallback");
+		pageNum = 0;
 		makeVisible(pageNum);
 	}
 
@@ -61,37 +73,6 @@ class TutWorld extends World
 			} else {
 				pages[i].visible = false;
 			}
-		}
-	}
-
-	public override function update() : Void
-	{
-		super.update();
-
-		if (pageNum >= pages.length) {
-			trace("Starting game");
-			HXP.world = new GameWorld();
-		}
-	}
-}
-
-private class TextButton extends Entity 
-{
-	private var calling : Void -> Void;
-
-	public function new(p_x : Float, p_y : Float, p_text : Text, p_callback : Void -> Void)
-	{
-		super(p_x, p_y, p_text);
-
-		setHitbox(p_text.width, p_text.height);
-		calling = p_callback;
-	}
-
-	public override function update() : Void
-	{
-		if (Input.mousePressed && collidePoint(x, y, Input.mouseX, Input.mouseY)) {
-			trace("Hitting button");
-			calling();
 		}
 	}
 }

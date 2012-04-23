@@ -60,6 +60,31 @@ class ApplicationMain {
             return Assets.getBitmapData ("gfx/missile.png");
          
 		
+		if (inName=="gfx/buttons/play.png")
+			 
+            return Assets.getBitmapData ("gfx/buttons/play.png");
+         
+		
+		if (inName=="gfx/buttons/next.png")
+			 
+            return Assets.getBitmapData ("gfx/buttons/next.png");
+         
+		
+		if (inName=="gfx/buttons/prev.png")
+			 
+            return Assets.getBitmapData ("gfx/buttons/prev.png");
+         
+		
+		if (inName=="gfx/buttons/tutorial.png")
+			 
+            return Assets.getBitmapData ("gfx/buttons/tutorial.png");
+         
+		
+		if (inName=="gfx/buttons/return.png")
+			 
+            return Assets.getBitmapData ("gfx/buttons/return.png");
+         
+		
 		if (inName=="gfx/healthbar.png")
 			 
             return Assets.getBitmapData ("gfx/healthbar.png");
@@ -202,6 +227,26 @@ class ApplicationMain {
 
 	
 		class NME_gfx_missile_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_buttons_play_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_buttons_next_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_buttons_prev_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_buttons_tutorial_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+	
+
+	
+		class NME_gfx_buttons_return_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 	
 
 	
